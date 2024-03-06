@@ -4,114 +4,114 @@ import java.util.Scanner;
 
 public class Game {
 
-    public void Start() {
+    private Player player;
 
-        Scanner scan = new Scanner(System.in);
-        int action = 0;
-        Dog myDog = null;
+    public void play() {
+        player = new Player();
+        int pilih = 0;
+        Dog chosenDog = null;
 
-        System.out.println("~~WELCOME TO PETSITTER~~");
+        System.out.println("LET's PLAY!!");
+        while (pilih < 10) {
+            System.out.println("What you wanna do");
+            System.out.println("1. Buy A odg");
+            System.out.println("2. Sell A Dog");
+            System.out.println("3. Change Dog");
+            System.out.println("4. Play with Dog");
+            System.out.println("5. Train the Dog");
+            System.out.println("6. Feed the Dog");
+            System.out.println("7. Bath the Dog");
+            System.out.println("8. Let The Dog Sleep");
+            System.out.println("9. Show Dog's Status");
+            System.out.println("10.Exit");
+            System.out.print("Your Answer :");
+            Scanner s = new Scanner(System.in);
+            pilih = s.nextInt();
 
-        do {
-            System.out.println("\n\n--MENU--");
-            System.out.println("1. Buy Pet");
-            System.out.println("2. play with Pet");
-            System.out.println("3. Train Pet");
-            System.out.println("4. Bath Pet");
-            System.out.println("5. Feed Pet");
-            System.out.println("6. Let Pet Sleep");
-            System.out.println("7. Sell Pet");
-            System.out.println("8. Show Pet Status");
-            System.out.println("9. Exit");
-            System.out.print("Choose you action: ");
-            action = scan.nextInt();
-            System.out.println("");
-
-            if (myDog == null) {
-                switch (action) {
-                    case 1:
-                        System.out.print("Enter your pet's name: ");
-                        String username = scan.next() + scan.nextLine();
-                        myDog = new Dog(username);
-                        System.out.println("Hai, " + myDog.getName());
-                        break;
-                    case 9:
-                        System.out.println("~~THANK YOU FOR PLAYING PETSITTER~~");
-                        break;
-                    default:
-                        System.out.println("Please buy a pet first before");
-                        break;
-                }
-            } else {
-                switch (action) {
-                    case 1:
-                        System.out.println("You already have " + myDog.getName());
-                        break;
-                    case 2:
-                        System.out.println(myDog.getName() + " is playing");
-                        myDog.play();
-                        myDog.showStatus();
-                        if (!myDog.isAlive()) {
-                            System.out.println(myDog.getName() + " dead");
-                            myDog = null;
-                        }
-                        break;
-                    case 3:
-                        System.out.println(myDog.getName() + " trained " );
-                        myDog.train();
-                        myDog.showStatus();
-                        if (!myDog.isAlive()) {
-                            System.out.println(myDog.getName() + " dead");
-                            myDog = null;
-                        }
-                        break;
-                    case 4:
-                        System.out.println(myDog.getName() + " bathed " );
-                        myDog.bath();
-                        myDog.showStatus();
-                        if (!myDog.isAlive()) {
-                            System.out.println(myDog.getName() + " dead");
-                            myDog = null;
-                        }
-                        break;
-                    case 5:
-                        System.out.println(myDog.getName() + " feed " );
-                        myDog.feed();
-                        myDog.showStatus();
-                        if (!myDog.isAlive()) {
-                            System.out.println(myDog.getName() + " dead");
-                            myDog = null;
-                        }
-                        break;
-                    case 6:
-                        System.out.println(myDog.getName() + " is sleeping");
-                        myDog.sleep();
-                        myDog.showStatus();
-                        if (!myDog.isAlive()) {
-                            System.out.println(myDog.getName() + " dead");
-                            myDog = null;
-                        }
-                        break;
-                    case 7:
-                        System.out.print("Would you like to sell " + myDog.getName() + "? [Y/N]");
-                        char sell = scan.next().charAt(0);
-                        if (sell == 'y' || sell == 'Y') {
-                            myDog = null;
-                            System.out.println("You sell your pet");
-                        }
-                        break;
-                    case 8:
-                        myDog.showStatus();
-                        break;
-                    case 9:
-                        System.out.println("~~THANK YOU FOR PLAYING PETSITTER~~");
-                        break;
-                    default:
-                        System.out.println("Action not available");
-                        break;
+            boolean isValid = true;
+            if (pilih > 1 && pilih < 10) {
+                if (player.getPetsNumber() == 0) {
+                    System.out.println("You must buy a dog first!!");
+                    isValid = false;
                 }
             }
 
-        } while (action != 9);
+            if (isValid) {
+                switch (pilih) {
+                    case 1:
+                        System.out.println("What's your dog's name ?");
+                        String name = s.next() + s.nextLine();
+                        Dog newDog = new Dog(name);
+                        player.buyADog(newDog);
+                        System.out.println("You have buy a dog named " + newDog.getName());
+                        chosenDog = newDog;
+                        break;
+                    case 2:
+                        if (chosenDog != null) {
+                            player.sellADog(chosenDog);
+                            System.out.println("You have sold a dog named " + chosenDog.getName());
+                            chosenDog = null;
+                        } else {
+                            System.out.println("Choose a dog first!!");
+                        }
+                        break;
+                    case 3:
+                        player.showPetsNames();
+                        System.out.println("Choose the number");
+                        int nomor = s.nextInt();
+                        chosenDog = player.getADog(nomor);
+                        System.out.println("You are now interacting wih " + chosenDog.getName());
+                        break;
+                    case 4:
+                        if (chosenDog != null) {
+                            chosenDog.play();
+                        } else {
+                            System.out.println("Choose a dog first");
+                        }
+                        break;
+                    case 5:
+                        if (chosenDog != null) {
+                            chosenDog.train();
+                        } else {
+                            System.out.println("Choose a dog first");
+                        }
+                        break;
+                    case 6:
+                        if (chosenDog != null) {
+                            chosenDog.eat();
+                            player.decreaseFoogStock(chosenDog.getFoodAmount());
+                        } else {
+                            System.out.println("Choose a dog first");
+                        }
+                        break;
+                    case 7:
+                        if (chosenDog != null) {
+                            chosenDog.bath();
+                        } else {
+                            System.out.println("Choose a dog first");
+                        }
+                        break;
+                    case 8:
+                        if (chosenDog != null) {
+                            chosenDog.sleep();
+                        } else {
+                            System.out.println("Choose a dog first");
+                        }
+                        break;
+                    case 9:
+                        if (chosenDog != null) {
+                            chosenDog.showStatus();
+                        } else {
+                            System.out.println("Choose a dog first");
+                        }
+                        break;
+
+                }
+                System.out.println("");
+                System.out.println("======END OF ROUND========");
+                System.out.println("");
+            }
+        }
+
     }
 }
