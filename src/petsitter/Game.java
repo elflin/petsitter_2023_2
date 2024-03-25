@@ -6,8 +6,8 @@ public class Game {
 
     private Player player;
 
-    public void play() {
-        player = new Player();
+    public Player play(Player currPlayer) {
+        player = currPlayer;
         int pilih = 0;
         Dog chosenDog = null;
 
@@ -23,7 +23,7 @@ public class Game {
             System.out.println("7. Bath the Dog");
             System.out.println("8. Let The Dog Sleep");
             System.out.println("9. Show Dog's Status");
-            System.out.println("10.Exit");
+            System.out.println("10.Logout");
             System.out.print("Your Answer :");
             Scanner s = new Scanner(System.in);
             pilih = s.nextInt();
@@ -59,7 +59,7 @@ public class Game {
                         player.showPetsNames();
                         System.out.println("Choose the number");
                         int nomor = s.nextInt();
-                        chosenDog = player.getADog(nomor);
+                        chosenDog = player.getADog(nomor - 1);
                         System.out.println("You are now interacting wih " + chosenDog.getName());
                         break;
                     case 4:
@@ -105,6 +105,9 @@ public class Game {
                             System.out.println("Choose a dog first");
                         }
                         break;
+                    case 10:
+                        System.out.println("Log out");
+                        break;
 
                 }
                 System.out.println("");
@@ -112,6 +115,6 @@ public class Game {
                 System.out.println("");
             }
         }
-
+        return this.player;
     }
 }
