@@ -39,12 +39,38 @@ public class Game {
             if (isValid) {
                 switch (pilih) {
                     case 1:
+                        
+                        int dogKindInput = 0;
+                        Dog newDog = null;
+                        
+                        do{
+                            System.out.println("What kind of dog do you want to buy?");
+                            System.out.println("1. Regular Dog");
+                            System.out.println("2. Smart Dog");
+                            System.out.println("3. Beauty Dog");
+                            System.out.println("Choose:");
+                            dogKindInput = s.nextInt();
+                        }while(dogKindInput<1 || dogKindInput > 3);
+                        
                         System.out.println("What's your dog's name ?");
                         String name = s.next() + s.nextLine();
-                        Dog newDog = new Dog(name);
+                        
+                        
+                        switch (dogKindInput) {
+                            case 1:
+                                newDog = new Dog(name);
+                                break;
+                            case 2:
+                                newDog = new SmartDog(name);
+                                break;
+                            case 3:
+                                newDog = new BeautyDog(name);
+                                break;
+                        }
+                        
                         player.buyADog(newDog);
                         System.out.println("You have buy a dog named " + newDog.getName());
-                        chosenDog = newDog;
+                        chosenDog = player.getADog(player.getPetsNumber()-1);
                         break;
                     case 2:
                         if (chosenDog != null) {

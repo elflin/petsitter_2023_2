@@ -2,13 +2,13 @@ package petsitter;
 
 public class Dog {
 
-    private String name;
-    private int fullness, happiness, cleaniness, health, intelligence;
-    private double age, price;
-    private int food_amount;
-    private boolean die = false;
-    private int lipi; //this is not an atribute. This is just a helpful variable to check the increasing price;
-    private boolean dec3yo, dec7yo; //these are not attributes of Dog. They are help variables to check whether proce has been decreased once the dog reaches age of 3 and 7 yoa
+    protected String name;
+    protected int fullness, happiness, cleaniness, health, intelligence;
+    protected double age, price;
+    protected int food_amount;
+    protected boolean die = false;
+    protected int lipi; //this is not an atribute. This is just a helpful variable to check the increasing price;
+    protected boolean dec3yo, dec7yo; //these are not attributes of Dog. They are help variables to check whether proce has been decreased once the dog reaches age of 3 and 7 yoa
     //constructor
 
     public Dog() {
@@ -139,7 +139,7 @@ public class Dog {
 
     //this is a method that only be invoked inside this class, that is why it is private.
     //this method will change price of a dog based on its age and intelligence
-    private void changePrice() {
+    protected void changePrice() {
         //price will increase 10% when intelligence increase by 10.
         if (intelligence - lipi >= 10) {
             price += 0.1 * price;
